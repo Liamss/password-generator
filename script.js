@@ -93,17 +93,37 @@ function getPasswordOptions() {
   var passwordLength = parseInt(prompt("Enter the length of password required between 8 and 128 characters:"))
 }
 
-// Validate length is a number between 8 and 128 
+// Validate input is a number between 8 and 128 - return null if failed validation
+
+if (isNaN (passwordLength) || passwordLength <8 || passwordLength > 128) {
+  alert("Password length must be a number between 8 and 128 characters.");
+  return null; 
+}
+
+// Prompts for character types 
+
+var includeLowercase = confirm("Include lowercase character?")
+var includeUppercase = confirm("Include uppercase characters?")
+var includeNumber = confirm("Include numeric characters?")
+var includeSpecial = confirm("Include special characters?")
+
+// Validate that at least one character type is selected 
+if (!(includeLowercase  ||  includeUppercase  || includeNumeric  || includeSpecial )) {
+ alert ("You must select one character type");
+ return null; 
+}
 
 
 // Function for getting a random element from an array
 function getRandom(arr) {
+ var randomIndex = Math.floor(Math.random() * arr.length);
+ return arr[randomIndex];
 
 }
 
 // Function to generate password with user input
 function generatePassword() {
-
+var options = getPasswordOptions ()
 }
 
 // Get references to the #generate element
