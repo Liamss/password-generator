@@ -88,42 +88,72 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function to prompt user for password options parseInt converts the input into a string, parses it then returns a number
+// Function to prompt the user for password options
 function getPasswordOptions() {
-  var passwordLength = parseInt(prompt("Enter the length of password required between 8 and 128 characters:"))
+  var passwordLength = parseInt(prompt("Enter the length of password required between 8 and 128 characters:"));
+
+  // Validate the password length
+  if (isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128) {
+    alert("Password length must be a number between 8 and 128 characters.");
+  }
+
+  // Prompt the user for character type choices - with cancel being no as the default
+  var includeLowercase = confirm("Include lowercase characters? 'OK' for Yes / 'Cancel' for No");
+  var includeUppercase = confirm("Include uppercase characters? 'OK' for Yes / 'Cancel' for No");
+  var includeNumeric = confirm("Include numeric characters? 'OK' for Yes / 'Cancel' for No");
+  var includeSpecial = confirm("Include special characters? 'OK' for Yes / 'Cancel' for No");
+
+  // Validate at least one character type is selected
+  if (!(includeLowercase || includeUppercase || includeNumeric || includeSpecial)) {
+    alert("You must select at least one character type.");
+  }
+
+  // Return an object containing the user's choices
+  return {
+    length: passwordLength,
+    includeLowercase: includeLowercase,
+    includeUppercase: includeUppercase,
+    includeNumeric: includeNumeric,
+    includeSpecial: includeSpecial
+  };
 }
 
-// Validate input is a number between 8 and 128 - return null if failed validation
-
-if (isNaN (passwordLength) || passwordLength <8 || passwordLength > 128) {
-  alert("Password length must be a number between 8 and 128 characters.");
-  return null; 
-}
-
-// Prompts for character types 
-
-var includeLowercase = confirm("Include lowercase character?")
-var includeUppercase = confirm("Include uppercase characters?")
-var includeNumber = confirm("Include numeric characters?")
-var includeSpecial = confirm("Include special characters?")
-
-// Validate that at least one character type is selected 
-if (!(includeLowercase  ||  includeUppercase  || includeNumeric  || includeSpecial )) {
- alert ("You must select one character type");
- return null; 
-}
-
-
-// Function for getting a random element from an array
+// Function to get a random element from an array
 function getRandom(arr) {
- var randomIndex = Math.floor(Math.random() * arr.length);
- return arr[randomIndex];
-
+  var randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
 
-// Function to generate password with user input
+// Function to generate a password based on user input
 function generatePassword() {
-var options = getPasswordOptions ()
+  var options = getPasswordOptions();
+
+  if (!options) {
+    return ""; // Return an empty string if no options are selected
+  }
+
+  var availableCharacters = [];
+  var result = "";
+
+  if (options.includeLowercase) {
+    availableCharacters = availableCharacters.concat(lowerCasedCharacters);
+  }
+  if (options.includeUppercase) {
+    availableCharacters = availableCharacters.concat(upperCasedCharacters);
+  }
+  if (options.includeNumeric) {
+    availableCharacters = availableCharacters.concat(numericCharacters);
+  }
+  if (options.includeSpecial) {
+    availableCharacters = availableCharacters.concat(specialCharacters);
+  }
+
+  for (var i = 0; i < options.length; i++) {
+    var randomCharacter = getRandom(availableCharacters);
+    result += randomCharacter;
+  }
+
+  return result;
 }
 
 // Get references to the #generate element
