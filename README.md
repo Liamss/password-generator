@@ -26,6 +26,9 @@ Please visit the URLs provided to see the latest deployed version
 
 ## Learnings / Future Work 
 
+- ParseInt - converts argument into a strong, parses it, then returns a number. Understand the concept, not totally when it's useful. 
+- IsNan - used to determine whether a value is not a number (NaN) or can be converted into a valid number. It returns a boolean value, either true or false.
+
 
 ## Credits
 N/A

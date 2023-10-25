@@ -88,10 +88,13 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function to prompt user for password options
+// Function to prompt user for password options parseInt converts the input into a string, parses it then returns a number
 function getPasswordOptions() {
-
+  var passwordLength = parseInt(prompt("Enter the length of password required between 8 and 128 characters:"))
 }
+
+// Validate length is a number between 8 and 128 
+
 
 // Function for getting a random element from an array
 function getRandom(arr) {
